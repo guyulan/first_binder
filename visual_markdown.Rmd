@@ -1,0 +1,48 @@
+---
+title: "visual_markdown"
+author: '10859333'
+date: "10/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# **Hello world**
+## *Let's do visualisation*
+This is my assignment,first I will load my packages
+```{r,message = FALSE}
+library(tidyverse)
+```
+
+Then I use the mpg dataset (which is a dataset that contains information about cars) to build a visualisation that plots the points corresponding to city fuel economy (cty) on the y-axis and manufacturer on the x-axis.
+```{r,message = FALSE}
+mpg %>%
+  ggplot(aes(x = manufacturer,y = cty)) + 
+  geom_point()
+```
+
+To make the x-axis labels more easy to read, use the str_to_title() function to change the manufacturer labels to title case, and adjust the axis labels easily using the theme() function. 
+```{r}
+mpg %>%
+  mutate(manufacturer = str_to_title(manufacturer)) %>%
+  ggplot(aes(x = manufacturer, y =cty)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle=45,vjust=0.5,hjust= .5))
+```
+
+To jitter the points, using the geom_jitter() function, and tidy up the axis titles using the labs() function to explicitly add axis labels 
+```{r}
+mpg %>%
+  mutate(manufacturer = str_to_title(manufacturer)) %>%
+  ggplot(aes(x = manufacturer, y =cty)) +
+  geom_jitter(width = .2,alpha= .75, size=2)+
+  theme_minimal()+
+  theme(axis.text.x=element_text(angle=45,vjust=0.5,hjust= .5))+
+  theme(text=element_text(size=13))+
+  labs(title="City Fuel Economy by CAr Manufaturer",
+       x="Manufacturer",
+       y="City Fuel Economy(mpg)")
+```
+
+# ***Here is the end, have a nice day!***
